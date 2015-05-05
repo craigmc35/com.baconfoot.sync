@@ -7,7 +7,7 @@ package com.baconfoot.sync;
 
 /**
  *
- * @author McLarenC
+ * @author McLarenCm
  */
 import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileInputStream;
@@ -33,8 +33,8 @@ public class Sync {
 //        getfiles = new String[1];
 //        getfiles[0] = "smb://localhost/c$/temp/file1.txt";
         for (String file : listFilesResutls) {
-            String filename = "smb://localhost/c$/test/" + file;
-            getFile(filename);
+            String fileName = "smb://localhost/c$/test/" + file;
+            getFile(fileName);
 
         }
 //        
@@ -169,8 +169,14 @@ public class Sync {
             long t2 = System.currentTimeMillis() - t1;
 
             for (int i = 0; i < files.length; i++) {
-                System.out.print(" " + files[i].getName() + "\n");
-                filelist.add(files[i].getName());
+                if (files[i].getName().contains("/")) {
+                    //we no like directorys
+                    System.out.print(" " + files[i].getName() + "- is dir\n");
+                } else {
+                    System.out.print(" " + files[i].getName() + "\n");
+                    filelist.add(files[i].getName());
+                }
+
             }
             System.out.println();
             System.out.println(files.length + " files in " + t2 + "ms");
