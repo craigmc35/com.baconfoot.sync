@@ -8,6 +8,7 @@ package com.baconfoot.sync;
 /**
  *
  * @author McLarenC
+ * This is a test commit.
  */
 import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileInputStream;
