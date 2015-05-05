@@ -20,6 +20,7 @@ import java.util.List;
 public class Sync {
 
     private static List<String> listFilesResutls;
+    private static List<String> listDirResutls;
 
     public static void main(String argv[]) throws Exception {
 
@@ -153,7 +154,8 @@ public class Sync {
     }
 
     public static List<String> listFiles(String[] argv) throws Exception {
-        List<String> filelist = new ArrayList<>();
+        List<String> fileList = new ArrayList<>();
+//        List<String> dirList = new ArrayList<>();
         for (int a = 0; a < argv.length; a++) {
             SmbFile file;
             SmbFile[] files = new SmbFile[0];
@@ -172,9 +174,10 @@ public class Sync {
                 if (files[i].getName().contains("/")) {
                     //we no like directorys
                     System.out.print(" " + files[i].getName() + "- is dir\n");
+//                    dirList.add(files[i].getName());
                 } else {
                     System.out.print(" " + files[i].getName() + "\n");
-                    filelist.add(files[i].getName());
+                    fileList.add(files[i].getName());
                 }
 
             }
@@ -182,8 +185,42 @@ public class Sync {
             System.out.println(files.length + " files in " + t2 + "ms");
 
         }
+        return fileList;
+    }
 
-        return filelist;
+    public static List<String> listDirs(String[] argv) throws Exception {
+//        List<String> fileList = new ArrayList<>();
+        List<String> dirList = new ArrayList<>();
+        for (int a = 0; a < argv.length; a++) {
+            SmbFile file;
+            SmbFile[] files = new SmbFile[0];
+
+            file = new SmbFile(argv[a]);
+
+            long t1 = System.currentTimeMillis();
+            try {
+                files = file.listFiles();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            long t2 = System.currentTimeMillis() - t1;
+
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].getName().contains("/")) {
+                    //we no like directorys
+                    System.out.print(" " + files[i].getName() + "- is dir\n");
+                    dirList.add(files[i].getName());
+                } else {
+                    System.out.print(" " + files[i].getName() + "\n");
+//                    fileList.add(files[i].getName());
+                }
+
+            }
+            System.out.println();
+            System.out.println(files.length + " files in " + t2 + "ms");
+
+        }
+        return dirList;
     }
 
 }
