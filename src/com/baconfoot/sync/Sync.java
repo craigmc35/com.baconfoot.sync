@@ -25,18 +25,20 @@ public class Sync {
     public static void main(String argv[]) throws Exception {
 
         Config conf = new Config();
-        String listFiles[];
-        listFiles = new String[1];
-        listFiles[0] = "smb://localhost/c$/test/";
-        listFilesResutls = listFiles(listFiles);
+        String syncDir[];
+        syncDir = new String[1];
+        syncDir[0] = "smb://localhost/c$/test/";
+        listFilesResutls = listFiles(syncDir);
+        listDirResutls = listDirs(syncDir);
 
 //        String getfiles[];
 //        getfiles = new String[1];
 //        getfiles[0] = "smb://localhost/c$/temp/file1.txt";
-        for (String file : listFilesResutls) {
-            String fileName = "smb://localhost/c$/test/" + file;
-            getFile(fileName);
-
+        for (String dir : listDirResutls) {
+            for (String file : listFilesResutls) {
+                String fileName = "smb://localhost/c$/test/" + dir + file;
+                getFile(fileName);
+            }
         }
 //        
 
